@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { DownloadModal } from "@/components/DownloadModal";
 import { SectionsColumn } from "@/components/SectionsColumn";
+import EditorPreviewContainer from "@/components/EditorPreviewContainer";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Editor() {
   const [markdown, setMarkdown] = useState("");
@@ -77,8 +79,27 @@ export default function Editor() {
             getTemplate={getTemplate}
           />
         </div>
-        Edit Preview Container
+        <EditorPreviewContainer
+          templates={templates}
+          setTemplates={setTemplates}
+          getTemplate={getTemplate}
+          focusedSectionSlug={focusedSectionSlug}
+          setFocusedSectionSlug={setFocusedSectionSlug}
+          selectedSectionSlugs={selectedSectionSlugs}
+          setSelectedSectionSlugs={setSelectedSectionSlugs}
+        />
       </div>
     </div>
   );
 }
+
+export const getStaticProps = async ({ locale }) => {
+  const sectionTemplate = sectionTemplates;
+  const i18n = await serverSideTranslations(locale, ["editor"]);
+  return {
+    props: {
+      sectionTemplate,
+      ...i18n,
+    },
+  };
+};
