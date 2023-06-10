@@ -3,6 +3,8 @@ import { sectionTemplates } from "@/data/section-templates";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import { DownloadModal } from "@/components/DownloadModal";
+import { SectionsColumn } from "@/components/SectionsColumn";
 
 export default function Editor() {
   const [markdown, setMarkdown] = useState("");
@@ -46,6 +48,7 @@ export default function Editor() {
     );
     localStorage.setItem("current-slug-list", selectedSectionSlugs);
   }, [selectedSectionSlugs]);
+  const drawerClass = showDrawer ? "" : "-translate-x-full md:transform-none";
   return (
     <div className="w-full h-full">
       <Head></Head>
@@ -56,6 +59,26 @@ export default function Editor() {
         onMenuClick={() => {}}
         isDrawerOpen={showDrawer}
       ></Nav>
+      {showModal && <DownloadModal setShowModal={setShowModal} />}
+      <div className="flex md:px-6 md:pt-6">
+        <div
+          className={`flex flex-0 drawer-height absolute md:static p-6 md:p-0 bg-white md:bg-transparent shadow md:shadow-none z-10 md:z-0 transform transition-transform duration-500 ease-in-out ${drawerClass}`}
+        >
+          <SectionsColumn
+            selectedSectionSlugs={selectedSectionSlugs}
+            setSelectedSectionSlugs={setSelectedSectionSlugs}
+            sectionSlugs={sectionSlugs}
+            setSectionSlugs={setSectionSlugs}
+            setFocusedSectionSlug={setFocusedSectionSlug}
+            focusesSectionSlug={focusedSectionSlug}
+            templates={templates}
+            originalTemplate={sectionTemplates}
+            setTemplates={setTemplates}
+            getTemplate={getTemplate}
+          />
+        </div>
+        Edit Preview Container
+      </div>
     </div>
   );
 }
