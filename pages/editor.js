@@ -7,8 +7,10 @@ import { DownloadModal } from "@/components/DownloadModal";
 import { SectionsColumn } from "@/components/SectionsColumn";
 import EditorPreviewContainer from "@/components/EditorPreviewContainer";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
-export default function Editor() {
+export default function Editor({ sectionTemplate }) {
+  const { t } = useTranslation("editor");
   const [markdown, setMarkdown] = useState("");
   const [selectedSectionSlugs, setSelectedSectionSlugs] = useState([]);
   const [sectionSlugs, setSectionSlugs] = useState(
@@ -74,7 +76,7 @@ export default function Editor() {
             setFocusedSectionSlug={setFocusedSectionSlug}
             focusesSectionSlug={focusedSectionSlug}
             templates={templates}
-            originalTemplate={sectionTemplates}
+            originalTemplate={sectionTemplate}
             setTemplates={setTemplates}
             getTemplate={getTemplate}
           />

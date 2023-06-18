@@ -90,6 +90,7 @@ export const EditorColumn = ({
             theme={theme}
             language="markdown"
             value={markdown}
+            onChange={onEdit}
             loading={"Loading..."}
             aria-label="Markdown Editor"
             options={{

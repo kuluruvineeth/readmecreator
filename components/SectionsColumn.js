@@ -137,7 +137,7 @@ export const SectionsColumn = ({
 ## ${sectionTitle}`,
       };
     } else {
-      originalSection = originalTemplates.find((s) => s.slug === sectionSlug);
+      originalSection = originalTemplate.find((s) => s.slug === sectionSlug);
     }
 
     const newTemplates = templates.map((s) => {
